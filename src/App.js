@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import EmployeeTable from "./components/EmployeeTable";
+import "./App.css";
+
+const employees = [
+  { id: 1, fname: "Bob", lname: "Smith", email: "test@test.com" },
+  { id: 2, fname: "Luis", lname: "Flores", email: "test@test.com" },
+  { id: 3, fname: "Bob", lname: "Marley", email: "test@test.com" },
+  { id: 4, fname: "Tom", lname: "Hanks", email: "test@test.com" },
+];
 
 function App() {
+  const [searchVal, setSearchVal] = useState("");
+  const [employeesArray, setEmployeesArray] = useState(employees);
+
+  const onSearchChanged = (event) => {
+    setSearchVal(event.currentTarget.value);
+  };
+
+  function updateEmployees(a) {
+    console.log(a);
+    setEmployeesArray([...a]);
+  }
+  console.log(employeesArray);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Employee Directory</h1>
+
+      {/* Input Field */}
+      <input id="search" onChange={onSearchChanged}></input>
+
+      {/* Employee Table Component */}
+      <EmployeeTable
+        employees={employeesArray}
+        setEmployees={updateEmployees}
+        search={searchVal}
+      />
     </div>
   );
 }
